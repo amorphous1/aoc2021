@@ -8,10 +8,10 @@ FetchContent_Declare(googletest URL https://github.com/google/googletest/archive
 set(gtest_force_shared_crt ON CACHE BOOL "" FORCE)  # For Windows: Prevent overriding the parent project's compiler/linker settings
 FetchContent_MakeAvailable(googletest)
 
-add_executable(aoc2021 main.cpp)
+add_executable(${PROJECT_NAME} main.cpp)
 
 enable_testing()
-add_executable(aoc2021_test test.cpp)
-target_link_libraries(aoc2021_test gtest_main)
+add_executable(${PROJECT_NAME}_test test.cpp)
+target_link_libraries(${PROJECT_NAME}_test gtest_main)
 include(GoogleTest)
-gtest_discover_tests(aoc2021_test)
+gtest_discover_tests(${PROJECT_NAME}_test)
