@@ -27,7 +27,7 @@ int day02a(const vector<string>& commands) {
         if (direction == "forward") x += distance;
         else if (direction == "up") y -= distance;
         else if (direction == "down") y += distance;
-        else throw std::invalid_argument("unknown direction: " + direction);
+        else throw invalid_argument("unknown direction: " + direction);
     }
     return x * y;
 }
@@ -44,7 +44,7 @@ int day02b(const vector<string>& commands) {
         }
         else if (direction == "up") aim -= val;
         else if (direction == "down") aim += val;
-        else throw std::invalid_argument("unknown direction: " + direction);
+        else throw invalid_argument("unknown direction: " + direction);
     }
     return x * y;
 }
