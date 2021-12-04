@@ -31,12 +31,11 @@ vector<string> find_matching(const vector<string>& numbers, int column, bool mos
     for (string number : numbers) {
         if (number[column] == '0') zeros.push_back(number); else ones.push_back(number);
     }
-    if (zeros.size() < ones.size()) {
+    if (zeros.size() <= ones.size()) {
         return most_common ? ones : zeros;
-    } else if (zeros.size() > ones.size()) {
+    } else {
         return most_common ? zeros : ones;
     }
-    return most_common ? ones : zeros;
 }
 
 int find_rating(vector<string> numbers, bool most_common) {
