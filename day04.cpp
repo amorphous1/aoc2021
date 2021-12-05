@@ -1,6 +1,3 @@
-#include <utility>
-#include <vector>
-#include <map>
 #include "common.h"
 
 #define SIZE 5
@@ -36,7 +33,6 @@ public:
         }
         has_won = true;
         return score(num);
-
     }
 
 private:
@@ -79,7 +75,6 @@ private:
     }
 };
 
-
 vector<Board> parse_boards(const vector<string> &lines) {
     vector<Board> boards;
     int row = 2;
@@ -91,21 +86,7 @@ vector<Board> parse_boards(const vector<string> &lines) {
     return boards;
 }
 
-int day04a(const vector<string>& lines) {
-    vector<string> nums = split(lines.at(0), ",");
-    vector<Board> boards = parse_boards(lines);
-    for (const string& num : nums) {
-        for (Board& board : boards) {
-            int winning_score = board.mark_number(stoi(num));
-            if (winning_score >= 0) {
-                return winning_score;
-            }
-        }
-    }
-    return -1;
-}
-
-int day04b(const vector<string>& lines) {
+int winning_score(const vector<string>& lines, bool first_board) {
     vector<string> nums = split(lines.at(0), ",");
     vector<Board> boards = parse_boards(lines);
     int winners = 0;
@@ -114,11 +95,19 @@ int day04b(const vector<string>& lines) {
             int winning_score = board.mark_number(stoi(num));
             if (winning_score >= 0) {
                 winners++;
-                if (winners == boards.size()) {
+                if (first_board || winners == boards.size()) {
                     return winning_score;
                 }
             }
         }
     }
     return -1;
+}
+
+int day04a(const vector<string>& lines) {
+    return winning_score(lines, true);
+}
+
+int day04b(const vector<string>& lines) {
+    return winning_score(lines, false);
 }
