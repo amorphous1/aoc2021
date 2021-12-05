@@ -1,7 +1,7 @@
 #include <iostream>
 #include <vector>
 #include <fstream>
-#include "day03.cpp"
+#include "day04.cpp"
 
 using namespace std;
 
@@ -21,7 +21,7 @@ vector<string> read_lines(const string& file_name) {
 }
 
 int main() {
-    cout << day03a(read_lines("inputs/day03.input")) << endl;
-    cout << day03b(read_lines("inputs/day03.input")) << endl;
+    cout << day04a(read_lines("inputs/day04.input")) << endl;
+    cout << day04b(read_lines("inputs/day04.input")) << endl;
     return 0;
 }
