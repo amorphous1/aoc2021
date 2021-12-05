@@ -3,6 +3,7 @@
 #include "day02.cpp"
 #include "day03.cpp"
 #include "day04.cpp"
+#include "day05.cpp"
 
 using namespace std;
 
@@ -48,4 +49,21 @@ TEST(Samples, Day04) {
 };
     EXPECT_EQ(day04a(sample_input), 4512);
     EXPECT_EQ(day04b(sample_input), 1924);
+}
+
+TEST(Samples, Day05) {
+    vector<string> sample_input = {
+            "0,9 -> 5,9",
+            "8,0 -> 0,8",
+            "9,4 -> 3,4",
+            "2,2 -> 2,1",
+            "7,0 -> 7,4",
+            "6,4 -> 2,0",
+            "0,9 -> 2,9",
+            "3,4 -> 1,4",
+            "0,0 -> 8,8",
+            "5,5 -> 8,2",
+    };
+    EXPECT_EQ(day05a(sample_input), 5);
+    EXPECT_EQ(day05b(sample_input), 12);
 }

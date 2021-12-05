@@ -19,3 +19,7 @@ vector<string> split(const string& s, const string& delimiter) {
     res.push_back(s.substr(pos_start));
     return res;
 }
+
+template <typename T> int sgn(T val) {
+    return (T(0) < val) - (val < T(0));
+}
