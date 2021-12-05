@@ -40,8 +40,8 @@ public:
     }
 
 private:
-    map<int, pair<short, short>> num_to_coord {};
-    map<pair<short, short>, int> coord_to_num {};
+    const map<int, pair<short, short>> num_to_coord {};
+    const map<pair<short, short>, int> coord_to_num {};
     map<pair<short, short>, bool> coord_to_marked;
     bool has_won = false;
 
