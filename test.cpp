@@ -4,6 +4,7 @@
 #include "day03.cpp"
 #include "day04.cpp"
 #include "day05.cpp"
+#include "day06.cpp"
 
 using namespace std;
 
@@ -66,4 +67,10 @@ TEST(Samples, Day05) {
     };
     EXPECT_EQ(day05a(sample_input), 5);
     EXPECT_EQ(day05b(sample_input), 12);
+}
+
+TEST(Samples, Day06) {
+    string sample_input = "3,4,3,1,2";
+    EXPECT_EQ(day06a(sample_input), 5934);
+    EXPECT_EQ(day06b(sample_input), 26984457539);
 }
