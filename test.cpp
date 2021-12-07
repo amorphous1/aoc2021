@@ -9,7 +9,7 @@
 using namespace std;
 
 TEST(Samples, Day01) {
-    vector<string> sample_input = { "199", "200", "208", "210", "200", "207", "240", "269", "260", "263" };
+    vector<int> sample_input = { 199, 200, 208, 210, 200, 207, 240, 269, 260, 263 };
     EXPECT_EQ(day01a(sample_input), 7);
     EXPECT_EQ(day01b(sample_input), 5);
 }
@@ -70,7 +70,7 @@ TEST(Samples, Day05) {
 }
 
 TEST(Samples, Day06) {
-    string sample_input = "3,4,3,1,2";
+    vector<int> sample_input = { 3,4,3,1,2 };
     EXPECT_EQ(day06a(sample_input), 5934);
     EXPECT_EQ(day06b(sample_input), 26984457539);
 }

@@ -3,10 +3,9 @@
 
 using namespace std;
 
-int day01a(const vector<string>& depths) {
+int day01a(const vector<int>& depths) {
     int prev_depth = INT32_MAX, depth_increases = 0;
-    for (const string& depth_text : depths) {
-        int depth = stoi(depth_text);
+    for (const int depth : depths) {
         if (depth > prev_depth) {
             depth_increases++;
         }
@@ -15,11 +14,7 @@ int day01a(const vector<string>& depths) {
     return depth_increases;
 }
 
-int day01b(const vector<string>& lines) {
-    vector<int> depths;
-    depths.resize(lines.size() ); // unfortunately this is necessary
-    transform(lines.begin(), lines.end(), depths.begin(), [](const string& s) { return stoi(s); });
-
+int day01b(const vector<int>& depths) {
     int prev_window = INT32_MAX, depth_increases = 0;
     for (int i = 0; i < depths.size() - 2; i++) {
         int current_window = depths.at(i) + depths.at(i+1) + depths.at(i+2);
