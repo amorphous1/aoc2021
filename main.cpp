@@ -2,7 +2,7 @@
 #include <vector>
 #include <fstream>
 #include "common.h"
-#include "day06.cpp"
+#include "day07.cpp"
 
 using namespace std;
 
@@ -30,7 +30,7 @@ vector<int> ints(const vector<string>& numbers) {
 
 int main() {
     vector<int> positions = ints(split(read_lines("inputs/day07.input").at(0), ","));
-    cout << day06a(timer_vals) << endl;
-    cout << day06b(timer_vals) << endl;
+    cout << day07a(positions) << endl;
+    cout << day07b(positions) << endl;
     return 0;
 }
