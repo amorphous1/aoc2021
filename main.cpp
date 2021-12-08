@@ -2,7 +2,7 @@
 #include <vector>
 #include <fstream>
 #include "common.h"
-#include "day07.cpp"
+#include "day08.cpp"
 
 using namespace std;
 
@@ -29,8 +29,7 @@ vector<int> ints(const vector<string>& numbers) {
 }
 
 int main() {
-    vector<int> positions = ints(split(read_lines("inputs/day07.input").at(0), ","));
-    cout << day07a(positions) << endl;
-    cout << day07b(positions) << endl;
+    cout << day08a(read_lines("inputs/day08.input")) << endl;
+    cout << day08b(read_lines("inputs/day08.input")) << endl;
     return 0;
 }
