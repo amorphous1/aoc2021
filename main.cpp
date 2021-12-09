@@ -2,7 +2,7 @@
 #include <vector>
 #include <fstream>
 #include "common.h"
-#include "day08.cpp"
+#include "day09.cpp"
 
 using namespace std;
 
@@ -21,15 +21,8 @@ vector<string> read_lines(const string& file_name) {
     return lines;
 }
 
-vector<int> ints(const vector<string>& numbers) {
-    vector<int> result;
-    result.resize(numbers.size() ); // unfortunately this is necessary
-    transform(numbers.begin(), numbers.end(), result.begin(), [](const string& s) { return stoi(s); });
-    return result;
-}
-
 int main() {
-    cout << day08a(read_lines("inputs/day08.input")) << endl;
-    cout << day08b(read_lines("inputs/day08.input")) << endl;
+    cout << day09a(read_lines("inputs/day09.input")) << endl;
+    cout << day09b(read_lines("inputs/day09.input")) << endl;
     return 0;
 }
