@@ -8,6 +8,7 @@
 #include "day07.cpp"
 #include "day08.cpp"
 #include "day09.cpp"
+#include "day10.cpp"
 
 using namespace std;
 
@@ -111,4 +112,21 @@ TEST(Samples, Day09) {
     };
     EXPECT_EQ(day09a(sample_input), 15);
     EXPECT_EQ(day09b(sample_input), 1134);
+}
+
+TEST(Samples, Day10) {
+    vector<string> sample_input = {
+            "[({(<(())[]>[[{[]{<()<>>",
+            "[(()[<>])]({[<{<<[]>>(",
+            "{([(<{}[<>[]}>{[]{[(<()>",
+            "(((({<>}<{<{<>}{[]{[]{}",
+            "[[<[([]))<([[{}[[()]]]",
+            "[{[{({}]{}}([{[{{{}}([]",
+            "{<[[]]>}<{[{[{[]{()[[[]",
+            "[<(<(<(<{}))><([]([]()",
+            "<{([([[(<>()){}]>(<<{{",
+            "<{([{{}}[<[[[<>{}]]]>[]]",
+    };
+    EXPECT_EQ(day10a(sample_input), 26397);
+    EXPECT_EQ(day10b(sample_input), 288957);
 }
