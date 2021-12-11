@@ -29,10 +29,10 @@ int count_flashes(map<pair<int, int>, int> &energy_by_pos) {
         if (energy_by_pos.at(current) > 9) {
             energy_by_pos[current] = 0;
             num_flashes++;
-            for (const auto& [dx, dy] : { make_pair(-1, -1), make_pair(0, -1), make_pair(1, -1),
-                                          make_pair(-1, 0),                    make_pair(1, 0),
-                                          make_pair(-1, 1),  make_pair(0, 1),  make_pair(1, 1) }) {
-                const auto& neighbour = make_pair(current.first + dx, current.second + dy);
+            int x = current.first, y = current.second;
+            for (const auto& neighbour : { make_pair(x-1, y-1), make_pair(x, y-1), make_pair(x+1, y-1),
+                                          make_pair(x-1, y),                       make_pair(x+1, y),
+                                          make_pair(x-1, y+1),  make_pair(x, y+1), make_pair(x+1, y+1) }) {
                 if (energy_by_pos.contains(neighbour) && energy_by_pos.at(neighbour) > 0) {
                     energy_by_pos[neighbour]++;
                     to_be_checked.insert(neighbour);
