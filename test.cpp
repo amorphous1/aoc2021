@@ -10,6 +10,7 @@
 #include "day09.cpp"
 #include "day10.cpp"
 #include "day11.cpp"
+#include "day12.cpp"
 
 using namespace std;
 
@@ -132,7 +133,6 @@ TEST(Samples, Day10) {
     EXPECT_EQ(day10b(sample_input), 288957);
 }
 
-
 TEST(Samples, Day11) {
     vector<string> sample_input = {
             "5483143223",
@@ -148,4 +148,17 @@ TEST(Samples, Day11) {
     };
     EXPECT_EQ(day11a(sample_input), 1656);
     EXPECT_EQ(day11b(sample_input), 195);
+}
+
+TEST(Samples, Day12) {
+    vector<string> sample_input = {
+            "start-A",
+            "start-b",
+            "A-c",
+            "A-b",
+            "b-d",
+            "A-end",
+            "b-end",
+    };
+    EXPECT_EQ(day12a(sample_input), 10);
 }
