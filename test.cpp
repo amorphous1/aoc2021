@@ -161,4 +161,5 @@ TEST(Samples, Day12) {
             "b-end",
     };
     EXPECT_EQ(day12a(sample_input), 10);
+    EXPECT_EQ(day12b(sample_input), 36);
 }
