@@ -7,9 +7,8 @@ using namespace std;
 int day02a(const vector<string>& commands) {
     int x = 0, y = 0;
     for (const string& cmd : commands) {
-        auto split_cmd = split(cmd, " ");
-        string direction = split_cmd.at(0);
-        int distance = stoi(split_cmd.at(1));
+        const auto& [direction, distance_text] = split_pair(cmd, " ");
+        int distance = stoi(distance_text);
         if (direction == "forward") x += distance;
         else if (direction == "up") y -= distance;
         else if (direction == "down") y += distance;
@@ -21,9 +20,8 @@ int day02a(const vector<string>& commands) {
 int day02b(const vector<string>& commands) {
     int x = 0, y = 0, aim = 0;
     for (const string& cmd : commands) {
-        auto split_cmd = split(cmd, " ");
-        string direction = split_cmd.at(0);
-        int val = stoi(split_cmd.at(1));
+        const auto& [direction, value_text] = split_pair(cmd, " ");
+        int val = stoi(value_text);
         if (direction == "forward") {
             x += val;
             y += aim * val;

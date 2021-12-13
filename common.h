@@ -28,6 +28,14 @@ vector<string> split(const string& s, const string& delimiter) {
     return res;
 }
 
+pair<string, string> split_pair(const string& s, const string& delimiter) {
+    vector<string> splits = split(s, delimiter);
+    if (splits.size() != 2) {
+        throw invalid_argument("'" + s + "' does not split in exactly two parts using delimiter '" + delimiter + "'");
+    }
+    return make_pair(splits.at(0), splits.at(1));
+}
+
 template <typename T> int sgn(T val) {
     return (T(0) < val) - (val < T(0));
 }

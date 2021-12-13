@@ -9,7 +9,7 @@ int day08a(const vector<string>& lines) {
     int result = 0;
     set<int> unique_lengths = { 2, 3, 4, 7 };
     for (const string& line : lines) {
-        string output_values = split(line, " | ").at(1);
+        const auto& [_, output_values] = split_pair(line, " | ");
         for (const string& output_value : split(output_values, " ")) {
             if (unique_lengths.contains((int)output_value.size())) {
                 result++;
@@ -40,9 +40,9 @@ int day08b(const vector<string>& lines) {
     int result = 0;
 
     for (const string& line : lines) {
-        const vector<string> patterns_outputs = split(line, " | ");
-        const vector<string> patterns = split(patterns_outputs.at(0), " ");
-        const vector<string> outputs = split(patterns_outputs.at(1), " ");
+        const auto& [patterns_text, outputs_text] = split_pair(line, " | ");
+        const vector<string> patterns = split(patterns_text, " ");
+        const vector<string> outputs = split(outputs_text, " ");
 
         map<char, char> unscrambled;
         for (const auto& [fingerprint, scrambled_segment] : fingerprint(patterns)) {

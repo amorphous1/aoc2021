@@ -24,13 +24,12 @@ pair<set<pair<int, int>>, vector<pair<int, int>>> parse_points_and_folds(const v
     vector<pair<int, int>> folds;
     int row;
     for (row = 0; !lines.at(row).empty(); row++) {
-        vector<string> x_y = split(lines.at(row), ",");
-        points.insert(make_pair(stoi(x_y.at(0)), stoi(x_y.at(1))));
+        const auto& [x, y] = split_pair(lines.at(row), ",");
+        points.insert(make_pair(stoi(x), stoi(y)));
     }
     for (row = row + 1; row < lines.size(); row++) {
-        vector<string> axis_val = split(lines.at(row), "=");
-        int val = stoi(axis_val.at(1));
-        folds.push_back(axis_val.at(0).ends_with('x') ? make_pair(val, 0) : make_pair(0, val));
+        const auto& [axis, val] = split_pair(lines.at(row), "=");
+        folds.push_back(axis.ends_with('x') ? make_pair(stoi(val), 0) : make_pair(0, stoi(val)));
     }
     return make_pair(points, folds);
 }
