@@ -12,6 +12,7 @@
 #include "day11.cpp"
 #include "day12.cpp"
 #include "day13.cpp"
+#include "day14.cpp"
 
 using namespace std;
 
@@ -190,4 +191,29 @@ TEST(Samples, Day13) {
             "fold along x=5",
     };
     EXPECT_EQ(day13a(sample_input), 17);
+}
+
+TEST(Samples, Day14) {
+    vector<string> sample_input = {
+            "NNCB",
+            "",
+            "CH -> B",
+            "HH -> N",
+            "CB -> H",
+            "NH -> C",
+            "HB -> C",
+            "HC -> B",
+            "HN -> C",
+            "NN -> C",
+            "BH -> H",
+            "NC -> B",
+            "NB -> B",
+            "BN -> B",
+            "BB -> N",
+            "BC -> B",
+            "CC -> N",
+            "CN -> C",
+    };
+    EXPECT_EQ(day14a(sample_input), 1588);
+    EXPECT_EQ(day14b(sample_input), 2188189693529);
 }
