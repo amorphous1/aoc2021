@@ -23,5 +23,9 @@ vector<string> read_lines(const string& file_name) {
 
 int main() {
     cout << day15a(read_lines("inputs/day15.input")) << endl;
+/*
+ * That's not the right answer; your answer is too high. Curiously, it's the right answer for someone else; you might be logged in to the wrong account or just unlucky. In any case, you need to be using your puzzle input. If you're stuck, make sure you're using the full input data; there are also some general tips on the about page, or you can ask for hints on the subreddit. Please wait one minute before trying again.
+ */
+    cout << day15b(read_lines("inputs/day15.input")) << endl;
     return 0;
 }

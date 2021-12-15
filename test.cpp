@@ -233,4 +233,5 @@ TEST(Samples, Day15) {
             "2311944581",
     };
     EXPECT_EQ(day15a(sample_input), 40);
+    EXPECT_EQ(day15b(sample_input), 315);
 }
