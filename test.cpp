@@ -15,6 +15,7 @@
 #include "day14.cpp"
 #include "day15.cpp"
 #include "day16.cpp"
+#include "day17.cpp"
 
 using namespace std;
 
@@ -253,4 +254,8 @@ TEST(Samples, Day16) {
     EXPECT_EQ(day16b("F600BC2D8F"), 0);
     EXPECT_EQ(day16b("9C005AC2F8F0"), 0);
     EXPECT_EQ(day16b("9C0141080250320F1802104A08"), 1);
+}
+
+TEST(Samples, Day17) {
+    EXPECT_EQ(day17a("target area: x=20..30, y=-10..-5"), 45);
 }

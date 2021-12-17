@@ -40,6 +40,18 @@ template <typename T> int sgn(T val) {
     return (T(0) < val) - (val < T(0));
 }
 
+vector<int> find_numbers(const string& str) {
+    vector<int> numbers;
+    char const* digits = "-0123456789";
+    size_t start, end = 0;
+    do {
+        start = str.find_first_of(digits, end);
+        end = str.find_first_not_of(digits, start);
+        numbers.push_back(stoi(str.substr(start, end != string::npos ? end-start : end)));
+    } while (end != string::npos);
+    return numbers;
+}
+
 vector<int> ints(const vector<string>& numbers) {
     vector<int> result;
     result.resize(numbers.size() ); // unfortunately this is necessary
