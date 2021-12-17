@@ -1,6 +1,7 @@
 #include <vector>
 #include <string>
 #include <map>
+#include <climits>
 
 using namespace std;
 
@@ -18,9 +19,8 @@ struct Packet {
         }
         return result;
     }
-
     string repr() {
-        string result = " { v" + to_string(version) + " " + type + " = " + to_string(value) + " #" + to_string(length) + " [";
+        string result = " { " + type + " = " + to_string(value) + " #" + to_string(length) + " [";
         for (Packet child : children) {
             result += child.repr();
         }
@@ -30,23 +30,21 @@ struct Packet {
 };
 
 Packet parse_packet(const string& packet, int start) {
-    int version = stoi(packet.substr(start, 3), nullptr, 2);
-    int type_id = stoi(packet.substr(start + 3, 3), nullptr, 2);
+    const map<int, string> bits_operators = { {0, "sum"}, {1, "product"}, {2, "min"}, {3, "max"}, {4, "val"}, {5, "gt"}, {6, "lt"}, {7, "eq"}, };
+    const int version = stoi(packet.substr(start, 3), nullptr, 2);
+    const string type = bits_operators.at(stoi(packet.substr(start + 3, 3), nullptr, 2));
     int pos = start + 6;
-    cout << "version " << version << " type_id " << type_id << endl;
-    if (type_id == 4) { // literal value
+    if (type == "val") { // literal value
         string value;
         do {
-            cout << "  " << packet << " " << pos << " " << value << endl;
             value += packet.substr(pos + 1, 4);
             pos += 5;
         } while (packet.at(pos - 5) == '1');
-        return { version, "literal", {}, stoul(value, nullptr, 2), pos - start };
+        return { version, type, {}, stoul(value, nullptr, 2), pos - start };
     }
-    // operator packet
     vector<Packet> children;
     if (packet.at(pos) == '0') { // 15 bit representing total size of children in bits
-        int end_pos = pos + 1 + 15 + stoi(packet.substr(pos + 1, 15), nullptr, 2);
+        const int end_pos = pos + 1 + 15 + stoi(packet.substr(pos + 1, 15), nullptr, 2);
         pos += 1 + 15;
         while (pos < end_pos) {
             Packet child = parse_packet(packet, pos);
@@ -54,19 +52,47 @@ Packet parse_packet(const string& packet, int start) {
             children.push_back(child);
         }
     } else { // 11 bit representing number of children
-        int num_children = stoi(packet.substr(pos + 1, 11), nullptr, 2);
+        const int num_children = stoi(packet.substr(pos + 1, 11), nullptr, 2);
         pos += 1 + 11;
         for (int i = 1; i <= num_children; i++) {
-            Packet child = parse_packet(packet, pos);
+            const Packet child = parse_packet(packet, pos);
             pos += child.length;
             children.push_back(child);
         }
     }
-    return { version, "operator", children, 0, pos - start };
+    unsigned long value = 0;
+    if (type == "sum") {
+        for (const Packet& child : children) {
+            value += child.value;
+        }
+    } else if (type == "product") {
+        value = 1;
+        for (const Packet& child : children) {
+            value *= child.value;
+        }
+    } else if (type == "min") {
+        value = ULONG_MAX;
+        for (const Packet& child : children) {
+            value = min(value, child.value);
+        }
+    } else if (type == "max") {
+        for (const Packet& child : children) {
+            value = max(value, child.value);
+        }
+    } else if (type == "gt") {
+        value = children.at(0).value > children.at(1).value ? 1 : 0;
+    } else if (type == "lt") {
+        value = children.at(0).value < children.at(1).value ? 1 : 0;
+    } else if (type == "eq") {
+        value = children.at(0).value == children.at(1).value ? 1 : 0;
+    } else {
+        throw invalid_argument("unknown operator type " + type);
+    }
+    return { version, type, children, value, pos - start };
 }
 
-unsigned long day16a(const string& hex_input) {
-    map<char, string> hex_to_bin = {
+string convert_to_binary(const string &hex_input) {
+    const map<char, string> hex_to_bin = {
             { '0', "0000" }, { '1', "0001" }, { '2', "0010" }, { '3', "0011" },
             { '4', "0100" }, { '5', "0101" }, { '6', "0110" }, { '7', "0111" },
             { '8', "1000" }, { '9', "1001" }, { 'A', "1010" }, { 'B', "1011" },
@@ -76,7 +102,15 @@ unsigned long day16a(const string& hex_input) {
     for (char ch : hex_input) {
         packet_text += hex_to_bin.at(ch);
     }
-    Packet packet = parse_packet(packet_text, 0);
-    cout << packet.repr() << endl;
+    return packet_text;
+}
+
+unsigned long day16a(const string& hex_input) {
+    Packet packet = parse_packet(convert_to_binary(hex_input), 0);
     return packet.version_sum();
+}
+
+unsigned long day16b(const string& hex_input) {
+    Packet packet = parse_packet(convert_to_binary(hex_input), 0);
+    return packet.value;
 }
