@@ -14,6 +14,7 @@
 #include "day13.cpp"
 #include "day14.cpp"
 #include "day15.cpp"
+#include "day16.cpp"
 
 using namespace std;
 
@@ -234,4 +235,13 @@ TEST(Samples, Day15) {
     };
     EXPECT_EQ(day15a(sample_input), 40);
     EXPECT_EQ(day15b(sample_input), 315);
+}
+
+TEST(Samples, Day16) {
+    EXPECT_EQ(day16a("D2FE28"), 6);
+    EXPECT_EQ(day16a("EE00D40C823060"), 14);
+    EXPECT_EQ(day16a("8A004A801A8002F478"), 16);
+    EXPECT_EQ(day16a("620080001611562C8802118E34"), 12);
+    EXPECT_EQ(day16a("C0015000016115A2E0802F182340"), 23);
+    EXPECT_EQ(day16a("A0016C880162017C3686B18A3D4780"), 31);
 }
