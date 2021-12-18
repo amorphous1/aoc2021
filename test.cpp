@@ -258,4 +258,6 @@ TEST(Samples, Day16) {
 
 TEST(Samples, Day17) {
     EXPECT_EQ(day17a("target area: x=20..30, y=-10..-5"), 45);
+    EXPECT_EQ(day17b("target area: x=20..30, y=-10..-5"), 112);
 }
+
