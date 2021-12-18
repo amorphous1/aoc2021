@@ -276,4 +276,5 @@ TEST(Samples, Day18) {
             "[[[[5,2],5],[8,[3,7]]],[[5,[7,5]],[4,4]]]",
     };
     EXPECT_EQ(day18a(sample_input), 4140);
+    EXPECT_EQ(day18b(sample_input), 3993);
 }

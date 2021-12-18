@@ -1,8 +1,6 @@
 #include <vector>
 #include <string>
-#include <cassert>
 #include <cmath>
-#include <iostream>
 
 using namespace std;
 
@@ -39,10 +37,9 @@ struct SnailfishNumber {
         }
         if (depth >= 4 && value < 0) {
             exploded = make_pair(this->left->value, this->right->value);
-            assert(exploded.first >= 0 && exploded.second >= 0);
             this->value = 0;
-            this->left = nullptr;
-            this->right = nullptr;
+            delete this->left; this->left = nullptr; // FIXME replace with managed pointers or avoid altogether
+            delete this->right; this->right = nullptr;
             return true;
         }
         if (left != nullptr && left->explode(depth + 1, exploded)) {
@@ -79,14 +76,10 @@ struct SnailfishNumber {
         bool changed;
         do {
             pair<int, int> none_exploded = make_pair(-1,-1);
-            cout << repr() ;
             changed = this->explode(0, none_exploded);
-            cout << " -> " << (changed ? repr() : "unchanged");
             if (!changed) {
                 changed = this->split();
-                cout << " -> " << (changed ? repr() : "unchanged");
             }
-            cout << endl;
         } while (changed);
         return this;
     }
@@ -109,27 +102,31 @@ struct SnailfishNumber {
         if (isdigit(ch)) {
             return new SnailfishNumber(ch - '0', nullptr, nullptr);
         }
-        assert(ch == '[');
         SnailfishNumber* left = parse_from(str, pos);
-        assert(str.at(pos) == ',');
-        pos++;
+        pos++; // skip ','
         SnailfishNumber* right = parse_from(str, pos);
-        assert(str.at(pos) == ']');
-        pos++;
+        pos++; // slip ']'
         return new SnailfishNumber(-1, left, right);
-    }
-
-    string repr() {
-        return value >= 0 ? to_string(value) : "[" + left->repr() + "," + right->repr() + "]";
     }
 };
 
 unsigned long day18a(const vector<string>& lines) {
     SnailfishNumber* result = SnailfishNumber::parse_from(lines.at(0));
     for (int i = 1; i < lines.size(); i++) {
-        SnailfishNumber* next = SnailfishNumber::parse_from(lines.at(i));
-        result = result->add(next);
-        cout << "----- result after step " << i << ": " << result->repr() << endl << endl;
+        result = result->add(SnailfishNumber::parse_from(lines.at(i)));
     }
     return result->magnitude();
+}
+
+unsigned long day18b(const vector<string>& lines) {
+    unsigned long max_magnitude = 0;
+    for (int a = 0; a < lines.size(); a++) {
+        for (int b = 0; b < lines.size(); b++) {
+            if (a != b) {
+                auto magnitude = SnailfishNumber::parse_from(lines.at(a))->add(SnailfishNumber::parse_from(lines.at(b)))->magnitude();
+                max_magnitude = max(magnitude, max_magnitude);
+            }
+        }
+    }
+    return max_magnitude;
 }
