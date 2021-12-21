@@ -1,8 +1,10 @@
-#include <map>
+    #include <map>
 #include <set>
 #include <string>
 #include <vector>
 #include "common.h"
+#define ORIENTATIONS 24
+#define MIN_OVERLAP 12
 
 using namespace std;
 
@@ -42,17 +44,17 @@ struct ScannerResult {
     int orientation = -1;
     Coord position;
 
-    bool find_match(ScannerResult& other, int min_overlap) {
+    bool find_match(ScannerResult& other) {
         vector<Coord> known_coords = coords.at(orientation);
-        for (int other_orientation = 0; other_orientation < 24; other_orientation++) {
+        for (int other_orientation = 0; other_orientation < ORIENTATIONS; other_orientation++) {
             map<Coord, int> mappings_by_offset;
             for (Coord coord : coords.at(orientation)) {
                 for (Coord other_coord : other.coords.at(other_orientation)) {
-                    Coord current_offset = other_coord.subtract(coord);
-                    mappings_by_offset[current_offset]++;
-                    if (mappings_by_offset[current_offset] >= min_overlap) {
+                    Coord offset = other_coord.subtract(coord);
+                    mappings_by_offset[offset]++;
+                    if (mappings_by_offset[offset] >= MIN_OVERLAP) {
                         other.orientation = other_orientation;
-                        other.position = position.add(current_offset);
+                        other.position = position.add(offset);
                         return true;
                     }
                 }
@@ -63,7 +65,7 @@ struct ScannerResult {
 
     void find_matches(vector<ScannerResult>& scanner_results, set<int>& scanners_to_check) {
         for (int i = 0; i < scanner_results.size(); i++) {
-            if (scanner_results.at(i).orientation < 0 && find_match(scanner_results.at(i), 12)) {
+            if (scanner_results.at(i).orientation < 0 && find_match(scanner_results.at(i))) {
                 scanners_to_check.insert(i);
             }
         }
@@ -71,7 +73,7 @@ struct ScannerResult {
 
     static map<int, vector<Coord>> coords_by_orientation(const vector<Coord>& scanned_coords) {
         map<int, vector<Coord>> result = {};
-        for (int orientation = 0; orientation < 24; orientation++) {
+        for (int orientation = 0; orientation < ORIENTATIONS; orientation++) {
             vector<Coord> coords = {};
             for (Coord coord : scanned_coords) {
                 coords.push_back(coord.using_orientation(orientation));
@@ -100,18 +102,17 @@ vector<ScannerResult> process_scanner_results(const vector<string> &lines) {
     }
     scanner_results.push_back({ScannerResult::coords_by_orientation(coords) });
     scanner_results.at(0).orientation = 0;
-    scanner_results.at(0).position = {0, 0, 0};
+    scanner_results.at(0).position = { 0, 0, 0 };
 
-    set<int> scanners_to_check = {0 };
+    set<int> scanners_to_check = { 0 };
     while (!scanners_to_check.empty()) {
         int current_idx = *scanners_to_check.begin();
-        ScannerResult current = scanner_results.at(current_idx);
         scanners_to_check.erase(current_idx);
-        current.find_matches(scanner_results, scanners_to_check);
+        scanner_results.at(current_idx).find_matches(scanner_results, scanners_to_check);
     }
     return scanner_results;
 }
-
+`
 unsigned long day19a(const vector<string>& lines) {
     vector<ScannerResult> scanner_results = process_scanner_results(lines);
 
