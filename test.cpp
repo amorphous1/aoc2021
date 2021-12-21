@@ -18,6 +18,7 @@
 #include "day17.cpp"
 #include "day18.cpp"
 #include "day19.cpp"
+#include "day21.cpp"
 
 using namespace std;
 
@@ -422,3 +423,8 @@ TEST(Samples, Day19) {
     EXPECT_EQ(day19a(sample_input), 79);
     EXPECT_EQ(day19b(sample_input), 3621);
 }
+
+TEST(Samples, Day21) {
+    EXPECT_EQ(day21a({ "Player 1 starting position: 4", "Player 2 starting position: 8" }), 739785);
+}
+
