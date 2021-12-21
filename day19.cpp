@@ -112,7 +112,7 @@ vector<ScannerResult> process_scanner_results(const vector<string> &lines) {
     }
     return scanner_results;
 }
-`
+
 unsigned long day19a(const vector<string>& lines) {
     vector<ScannerResult> scanner_results = process_scanner_results(lines);
 
