@@ -436,6 +436,7 @@ TEST(Samples, Day20) {
             "..###",
     };
     EXPECT_EQ(day20a(sample_input), 35);
+    EXPECT_EQ(day20b(sample_input), 3351);
 }
 
 TEST(Samples, Day21) {
