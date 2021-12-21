@@ -20,11 +20,14 @@ struct Coord {
             default: throw invalid_argument("unknown orientation ID " + to_string(orientation));
         }
     }
-    Coord subtract(Coord other) const {
+    [[nodiscard]] Coord subtract(Coord other) const {
         return { other.a - a, other.b - b, other.c - c };
     }
-    Coord add(Coord other) const {
+    [[nodiscard]] Coord add(Coord other) const {
         return { other.a + a, other.b + b, other.c + c };
+    }
+    [[nodiscard]] unsigned long manhattan_distance(Coord other) const {
+        return abs(other.a - a) + abs(other.b - b) + abs(other.c - c);
     }
     bool operator==(const Coord& other) const {
         return a == other.a && b == other.b && c == other.c;
@@ -33,11 +36,6 @@ struct Coord {
         return a < other.a || (a == other.a && b < other.b) || (a == other.a && b == other.b && c < other.c);
     }
 };
-
-ostream& operator<<(ostream& os, const Coord& c) {
-    os << c.a << ',' << c.b << ',' << c.c;
-    return os;
-}
 
 struct ScannerResult {
     map<int, vector<Coord>> coords;
@@ -84,13 +82,7 @@ struct ScannerResult {
     }
 };
 
-ostream& operator<<(ostream& os, const ScannerResult& s) {
-    os << "{ pos=" << s.position << ", orientation=" << s.orientation << " }";
-    return os;
-}
-
-
-unsigned long day19a(const vector<string>& lines) {
+vector<ScannerResult> process_scanner_results(const vector<string> &lines) {
     vector<ScannerResult> scanner_results;
     vector<Coord> coords;
     for (const string& line : lines) {
@@ -107,17 +99,21 @@ unsigned long day19a(const vector<string>& lines) {
         }
     }
     scanner_results.push_back({ScannerResult::coords_by_orientation(coords) });
-
     scanner_results.at(0).orientation = 0;
     scanner_results.at(0).position = {0, 0, 0};
-    set<int> scanners_to_check = { 0 };
 
+    set<int> scanners_to_check = {0 };
     while (!scanners_to_check.empty()) {
         int current_idx = *scanners_to_check.begin();
         ScannerResult current = scanner_results.at(current_idx);
         scanners_to_check.erase(current_idx);
         current.find_matches(scanner_results, scanners_to_check);
     }
+    return scanner_results;
+}
+
+unsigned long day19a(const vector<string>& lines) {
+    vector<ScannerResult> scanner_results = process_scanner_results(lines);
 
     set<Coord> all_coords;
     for (ScannerResult scanner_result : scanner_results) {
@@ -126,4 +122,16 @@ unsigned long day19a(const vector<string>& lines) {
         }
     }
     return all_coords.size();
+}
+
+unsigned long day19b(const vector<string>& lines) {
+    vector<ScannerResult> scanner_results = process_scanner_results(lines);
+
+    unsigned long max_scanner_distance = 0;
+    for (const ScannerResult& s1 : scanner_results) {
+        for (const ScannerResult& s2 : scanner_results) {
+            max_scanner_distance = max(s1.position.manhattan_distance(s2.position), max_scanner_distance);
+        }
+    }
+    return max_scanner_distance;
 }
