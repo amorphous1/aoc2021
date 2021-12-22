@@ -23,5 +23,6 @@ vector<string> read_lines(const string& file_name) {
 
 int main() {
     cout << day22a(read_lines("inputs/day22.input")) << endl;
+    cout << day22b(read_lines("inputs/day22.input")) << endl;
     return 0;
 }
