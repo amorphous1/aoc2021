@@ -21,6 +21,7 @@
 #include "day20.cpp"
 #include "day21.cpp"
 #include "day22.cpp"
+#include "day23.cpp"
 
 using namespace std;
 
@@ -533,4 +534,10 @@ TEST(Samples, Day22) {
     };
     EXPECT_EQ(day22a(sample_input_a), 590784);
     EXPECT_EQ(day22b(sample_input_b), 2758514936282235);
+}
+
+TEST(Samples, Day23) {
+    EXPECT_EQ(burrow_distance("h1", "h2"), 1);
+    EXPECT_EQ(burrow_distance("h1", "a2"), 4);
+    EXPECT_EQ(burrow_distance("a2", "b3"), 7);
 }
