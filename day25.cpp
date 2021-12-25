@@ -13,9 +13,9 @@ pair<int, int> north_of(pair<int, int> space, int rows) {
     return space.second > 0 ? make_pair(space.first, space.second  - 1) : make_pair(space.first, rows - 1);
 }
 
-unsigned long day25a(vector<string> lines) {
+unsigned long day25a(const vector<string>& lines) {
     set<pair<int, int>> east_moving_herd, south_moving_herd, empty_spaces;
-    int rows = lines.size(), cols = lines.at(0).size();
+    int rows = (int)lines.size(), cols = (int)lines.at(0).size();
     for (int row = 0; row < rows; row++) {
         for (int col = 0; col < cols; col++) {
             pair<int, int> coord = make_pair(col, row);
