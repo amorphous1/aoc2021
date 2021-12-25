@@ -22,6 +22,7 @@
 #include "day21.cpp"
 #include "day22.cpp"
 #include "day23.cpp"
+#include "day25.cpp"
 
 using namespace std;
 
@@ -540,4 +541,19 @@ TEST(Samples, Day23) {
     EXPECT_EQ(burrow_distance("h1", "h2"), 1);
     EXPECT_EQ(burrow_distance("h1", "a2"), 4);
     EXPECT_EQ(burrow_distance("a2", "b3"), 7);
+}
+
+TEST(Samples, Day25) {
+    vector<string> sample_input = {
+            "v...>>.vv>",
+            ".vv>>.vv..",
+            ">>.>v>...v",
+            ">>v>>.>.v.",
+            "v>v.vv.v..",
+            ">.>>..v...",
+            ".vv..>.>v.",
+            "v.v..>>v.v",
+            "....v..v.>",
+    };
+    EXPECT_EQ(day25a(sample_input), 58);
 }
