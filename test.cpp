@@ -444,6 +444,7 @@ TEST(Samples, Day20) {
 
 TEST(Samples, Day21) {
     EXPECT_EQ(day21a({ "Player 1 starting position: 4", "Player 2 starting position: 8" }), 739785);
+    EXPECT_EQ(day21b({ "Player 1 starting position: 4", "Player 2 starting position: 8" }), 444356092776315);
 }
 
 TEST(Samples, Day22) {
